@@ -1,0 +1,55 @@
+<idea-plugin version="2">
+    <id>com.xiao.plug.git.ignore</id>
+    <name>Git Ignore File Creator</name>
+    <version>1.0</version>
+    <vendor email="xiao.yang@neulion.com" url="https://github.com/BigXiaoYang/git-ignore-file-creator">YangXiao</vendor>
+
+    <description><![CDATA[
+      This plugin is an ignore file creator for Android Stuio.<br>
+      it can add the item which should be ignore for automatically, now support the items below:<br>
+      .gradle/<br>
+      .idea/<br>
+      local.properties<br>
+      *.iml<br>
+      captures/<br>
+      build/<br>
+      module1/build/<br>
+      module2/build/<br>
+      ......<br>
+    ]]></description>
+
+    <change-notes><![CDATA[
+      No Change<br>
+    ]]>
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="141.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="CreatorAction" class="com.xiao.plug.git.ignore.MainAction" text="Create Ignore File"
+                description="Create the ignore file in project root folder.">
+            <add-to-group group-id="VcsGroups" anchor="first"/>
+        </action>
+    </actions>
+
+    <application-components>
+        <component>
+            <implementation-class>com.xiao.plug.git.ignore.component.IgnoreItemCreator</implementation-class>
+        </component>
+        <component>
+            <implementation-class>com.xiao.plug.git.ignore.component.FileCreator</implementation-class>
+        </component>
+    </application-components>
+</idea-plugin>
