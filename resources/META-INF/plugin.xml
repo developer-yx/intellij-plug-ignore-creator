@@ -2,7 +2,8 @@
     <id>com.xiao.plug.git.ignore</id>
     <name>Git Ignore File Creator</name>
     <version>1.0</version>
-    <vendor email="xiao.yang@neulion.com" url="https://github.com/BigXiaoYang/git-ignore-file-creator">YangXiao</vendor>
+    <vendor email="prometheus.ck@gamil.com" url="https://github.com/prometheus-ck/intellij-plug-ignore-creator">Prometheus.CK
+    </vendor>
 
     <description><![CDATA[
       This plugin is an ignore file creator for Android Stuio.<br>
