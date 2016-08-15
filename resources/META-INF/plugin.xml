@@ -7,7 +7,7 @@
     </vendor>
 
     <description><![CDATA[
-      This plugin is an ignore file creator for Android Stuio.<br>
+      This plugin is an ignore file creator for Android Studio.<br>
       it can add the item which should be ignore for automatically, now support the items below:<br>
       .gradle/<br>
       .idea/<br>
