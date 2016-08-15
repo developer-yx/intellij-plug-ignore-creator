@@ -2,7 +2,8 @@
     <id>com.xiao.plug.git.ignore</id>
     <name>Git Ignore File Creator</name>
     <version>1.0</version>
-    <vendor email="prometheus.ck@gamil.com" url="https://github.com/prometheus-ck/intellij-plug-ignore-creator">Prometheus.CK
+    <vendor email="prometheus.xiao@gamil.com"
+            url="https://github.com/prometheus-xiao/intellij-plug-ignore-creator">Prometheus.X
     </vendor>
 
     <description><![CDATA[
