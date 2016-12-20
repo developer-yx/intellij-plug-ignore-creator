@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.ui.Messages;
+import com.xiao.plug.git.ignore.bean.IgnoreFile;
 import com.xiao.plug.git.ignore.bean.IgnoreItem;
 import com.xiao.plug.git.ignore.component.IgnoreItemCreator;
 import com.xiao.plug.git.ignore.component.FileCreator;
@@ -24,13 +25,13 @@ public class MainAction extends AnAction
 
         IgnoreItemCreator checker = application.getComponent(IgnoreItemCreator.class);
 
-        List<IgnoreItem> items = checker.getIgnoreItems(projectPath);
+        List<IgnoreFile> files = checker.getIgnoreFiles(projectPath);
 
         FileCreator creator = application.getComponent(FileCreator.class);
 
-        if (creator.createIgnoreFile(projectPath, items))
+        if (creator.createIgnoreFile(files))
         {
-            showSuccessMessage(items);
+            showSuccessMessage(files);
         }
         else
         {
@@ -39,15 +40,20 @@ public class MainAction extends AnAction
 
     }
 
-    private void showSuccessMessage(List<IgnoreItem> items)
+    private void showSuccessMessage(List<IgnoreFile> files)
     {
         final StringBuilder builder = new StringBuilder();
 
         builder.append("Ignore file created successfully. ignored the items below:");
 
-        for (IgnoreItem item : items)
+        for (IgnoreFile file : files)
         {
-            builder.append("\n" + item.getName());
+            builder.append("\n" + file.getPath());
+
+            for (IgnoreItem item : file.getIgnoreItems())
+            {
+                builder.append("\n" + item.getContent());
+            }
         }
 
         Messages.showMessageDialog(builder.toString(), "Created Successfully", Messages.getInformationIcon());

@@ -1,6 +1,7 @@
 package com.xiao.plug.git.ignore.component;
 
 import com.intellij.openapi.components.ApplicationComponent;
+import com.xiao.plug.git.ignore.bean.IgnoreFile;
 import com.xiao.plug.git.ignore.bean.IgnoreItem;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,15 +37,30 @@ public class FileCreator implements ApplicationComponent
         return "FileCreator";
     }
 
-    public boolean createIgnoreFile(String path, List<IgnoreItem> items)
+    public boolean createIgnoreFile(List<IgnoreFile> files)
+    {
+        boolean success = true;
+
+        for (IgnoreFile item : files)
+        {
+            if (!createIgnoreFile(item))
+            {
+                success = false;
+            }
+        }
+
+        return success;
+    }
+
+    public boolean createIgnoreFile(IgnoreFile file)
     {
         BufferedWriter bufferedWriter = null;
 
         try
         {
-            bufferedWriter = new BufferedWriter(new FileWriter(new File(path + "/" + ".gitignore")));
+            bufferedWriter = new BufferedWriter(new FileWriter(new File(file.getPath() + "/" + ".gitignore")));
 
-            for (IgnoreItem item : items)
+            for (IgnoreItem item : file.getIgnoreItems())
             {
                 bufferedWriter.write(item.getContent() + "\n\n");
             }

@@ -1,6 +1,7 @@
 package com.xiao.plug.git.ignore.component;
 
 import com.intellij.openapi.components.ApplicationComponent;
+import com.xiao.plug.git.ignore.bean.IgnoreFile;
 import com.xiao.plug.git.ignore.bean.IgnoreItem;
 
 import org.jetbrains.annotations.NotNull;
@@ -38,35 +39,41 @@ public class IgnoreItemCreator implements ApplicationComponent
         return "FileChecker";
     }
 
-    public List<IgnoreItem> getIgnoreItems(String rootPath)
+    public List<IgnoreFile> getIgnoreFiles(String rootPath)
     {
-        List<IgnoreItem> items = new ArrayList<>();
+        List<IgnoreItem> rootIgnoreItems = new ArrayList<>();
 
-        items.add(new IgnoreItem(".gradle/", "gradle file folder, created by Android Studio atomically"));
+        rootIgnoreItems.add(new IgnoreItem(".gradle/"));
 
-        items.add(new IgnoreItem(".idea/", "idea file folder, created by Android Studio atomically"));
+        rootIgnoreItems.add(new IgnoreItem(".idea/"));
 
-        items.add(new IgnoreItem("local.properties", "this file will be changed in different System (Windows/Mac OS)"));
+        rootIgnoreItems.add(new IgnoreItem("local.properties"));
 
-        items.add(new IgnoreItem("*.iml", "this file is created by Android Studio atomically"));
+        rootIgnoreItems.add(new IgnoreItem("*.iml"));
 
-        items.add(new IgnoreItem("captures/", "when user capture device screenshot, this folder will be created"));
+        rootIgnoreItems.add(new IgnoreItem("captures/"));
 
-        items.add(new IgnoreItem("build/", "compile folder, created atomically while compiling"));
+        rootIgnoreItems.add(new IgnoreItem("build/"));
 
-        List<IgnoreItem> modulesBuildFolders = getSettingsFile(new File(rootPath));
+        List<IgnoreFile> files = new ArrayList<>();
 
-        if (modulesBuildFolders != null)
+        files.add(new IgnoreFile(rootPath, rootIgnoreItems));
+
+        List<IgnoreFile> moduleIgnoreFiles = getModuleIgnoreFiles(rootPath);
+
+        if (moduleIgnoreFiles != null)
         {
-            items.addAll(modulesBuildFolders);
+            files.addAll(moduleIgnoreFiles);
         }
 
-        return items;
+        return files;
     }
 
-    private List<IgnoreItem> getSettingsFile(File root)
+    private List<IgnoreFile> getModuleIgnoreFiles(String rootPath)
     {
-        File[] list = root.listFiles(new FilenameFilter()
+        List<IgnoreFile> ignoreFiles = new ArrayList<>();
+
+        File[] list = new File(rootPath).listFiles(new FilenameFilter()
         {
             @Override
             public boolean accept(File dir, String name)
@@ -84,8 +91,6 @@ public class IgnoreItemCreator implements ApplicationComponent
 
         try
         {
-            List<IgnoreItem> items = new ArrayList<>();
-
             bufferedReader = new BufferedReader(new FileReader(list[0]));
 
             String line;
@@ -101,11 +106,11 @@ public class IgnoreItemCreator implements ApplicationComponent
 
                 for (String module : modules)
                 {
-                    items.add(new IgnoreItem(module + "/build/"));
+                    ignoreFiles.add(new IgnoreFile(rootPath + "/" + module, getModuleIgnoreItems()));
                 }
             }
 
-            return items;
+            return ignoreFiles;
         }
         catch (Exception e)
         {
@@ -122,6 +127,19 @@ public class IgnoreItemCreator implements ApplicationComponent
                 e.printStackTrace();
             }
         }
+    }
+
+    private static List<IgnoreItem> getModuleIgnoreItems()
+    {
+        List<IgnoreItem> items = new ArrayList<>();
+
+        items.add(new IgnoreItem("*.iml"));
+
+        items.add(new IgnoreItem("build/"));
+
+        items.add(new IgnoreItem("local.properties"));
+
+        return items;
     }
 
     private static List<String> getModules(String includeLine)

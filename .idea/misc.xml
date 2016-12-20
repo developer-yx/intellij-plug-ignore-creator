@@ -38,6 +38,9 @@
       <property name="caretWidth" class="java.lang.Integer" />
     </properties>
   </component>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
+  </component>
   <component name="GradleLocalSettings">
     <option name="modificationStamps">
       <map>
@@ -49,37 +52,37 @@
         <entry key="D:/AndroidStudioWorkspace/projects/NFL/NFL2014" value="5664787676088" />
         <entry key="D:/AndroidStudioWorkspace/projects/UFC" value="4245775781650" />
         <entry key="D:/AndroidStudioWorkspace/svn/projects/UFC" value="7083106375279" />
-        <entry key="D:/WorkSpace/AndroidStudio/local/ExpandableTextView-master" value="5690508480000" />
-        <entry key="D:/WorkSpace/AndroidStudio/local/advanced-textview-master" value="4267251834000" />
-        <entry key="D:/WorkSpace/AndroidStudio/local/android-justifiedtextview-master" value="5708504024000" />
-        <entry key="D:/WorkSpace/AndroidStudio/svn/libs/NLOthers/NLChromecast/trunk" value="8569249116194" />
-        <entry key="D:/WorkSpace/AndroidStudio/svn/libs/NLOthers/NLNotification/trunk" value="7138424193748" />
-        <entry key="D:/WorkSpace/AndroidStudio/svn/projects/Demo/UFC2014_MultiScreen" value="4346356127422" />
-        <entry key="D:/WorkSpace/AndroidStudio/svn/projects/NMT/NMT2015_V2" value="8566102145972" />
-        <entry key="D:/WorkSpace/AndroidStudio/svn/projects/PivotTV/PivotTV2015" value="4283044384727" />
-        <entry key="D:/WorkSpace/AndroidStudio/svn/projects/UFC/UFC2014" value="4284136016490" />
-        <entry key="D:/Workspace/AndroidStudio/local/CastVideos-android-master_1.14" value="5697555191149" />
-        <entry key="D:/Workspace/AndroidStudio/local/ChromecastDemo1.11" value="7078895128799" />
-        <entry key="D:/Workspace/AndroidStudio/local/NLChromecast1.1" value="12756399265996" />
-        <entry key="D:/Workspace/AndroidStudio/local/NLNotifications" value="7096616909256" />
-        <entry key="D:/Workspace/AndroidStudio/local/ParserDemo" value="5672808261043" />
-        <entry key="D:/Workspace/AndroidStudio/local/TestApplication" value="4263673580664" />
-        <entry key="D:/Workspace/AndroidStudio/local/ua-android-lib-latest/samples" value="5674484712000" />
-        <entry key="D:/Workspace/AndroidStudio/svn/libs/NLMediaPlayer/trunk" value="8508136868578" />
-        <entry key="D:/Workspace/AndroidStudio/svn/libs/NLNetworking/trunk" value="4254186001957" />
-        <entry key="D:/Workspace/AndroidStudio/svn/libs/NLOthers/NLAdobePass/trunk" value="5670829035561" />
-        <entry key="D:/Workspace/AndroidStudio/svn/libs/NLOthers/NLChromecast/trunk" value="7126862019189" />
-        <entry key="D:/Workspace/AndroidStudio/svn/libs/NLOthers/NLNotification/branches/1.0" value="5684343704577" />
-        <entry key="D:/Workspace/AndroidStudio/svn/libs/NLOthers/NLNotification/trunk" value="7120825226062" />
-        <entry key="D:/Workspace/AndroidStudio/svn/libs/NLUIKit/trunk" value="12794136629129" />
-        <entry key="D:/Workspace/AndroidStudio/svn/projects/CommonProject/V5Platform" value="7091119024168" />
-        <entry key="D:/Workspace/AndroidStudio/svn/projects/NBA/NBA2014" value="4263702927782" />
-        <entry key="D:/Workspace/AndroidStudio/svn/projects/NFL/NFL2014/trunk" value="5675035790842" />
-        <entry key="D:/Workspace/AndroidStudio/svn/projects/NHL/NHL2014" value="4256342732652" />
-        <entry key="D:/Workspace/AndroidStudio/svn/projects/NMT/NMT2015" value="8524709322646" />
-        <entry key="D:/Workspace/AndroidStudio/svn/projects/NMT/NMT2015_V2" value="8552702340931" />
-        <entry key="D:/Workspace/AndroidStudio/svn/projects/PivotTV/PivotTV2015" value="4276310231909" />
-        <entry key="D:/Workspace/AndroidStudio/svn/projects/UFC/UFC2014" value="7111525992876" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/ExpandableTextView-master" value="5690508480000" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/advanced-textview-master" value="4267251834000" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/android-justifiedtextview-master" value="5708504024000" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/libs/NLOthers/NLChromecast/trunk" value="8569249116194" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/libs/NLOthers/NLNotification/trunk" value="7138424193748" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/Demo/UFC2014_MultiScreen" value="4346356127422" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/NMT/NMT2015_V2" value="8566102145972" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/PivotTV/PivotTV2015" value="4283044384727" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/UFC/UFC2014" value="4284136016490" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/CastVideos-android-master_1.14" value="5697555191149" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/ChromecastDemo1.11" value="7078895128799" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/NLChromecast1.1" value="12756399265996" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/NLNotifications" value="7096616909256" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/ParserDemo" value="5672808261043" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/TestApplication" value="4263673580664" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/local/ua-android-lib-latest/samples" value="5674484712000" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/libs/NLMediaPlayer/trunk" value="8508136868578" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/libs/NLNetworking/trunk" value="4254186001957" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/libs/NLOthers/NLAdobePass/trunk" value="5670829035561" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/libs/NLOthers/NLChromecast/trunk" value="7126862019189" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/libs/NLOthers/NLNotification/branches/1.0" value="5684343704577" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/libs/NLOthers/NLNotification/trunk" value="7120825226062" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/libs/NLUIKit/trunk" value="12794136629129" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/CommonProject/V5Platform" value="7091119024168" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/NBA/NBA2014" value="4263702927782" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/NFL/NFL2014/trunk" value="5675035790842" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/NHL/NHL2014" value="4256342732652" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/NMT/NMT2015" value="8524709322646" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/NMT/NMT2015_V2" value="8552702340931" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/PivotTV/PivotTV2015" value="4276310231909" />
+        <entry key="$PROJECT_DIR$/../../AndroidStudio/svn/projects/UFC/UFC2014" value="7111525992876" />
       </map>
     </option>
   </component>

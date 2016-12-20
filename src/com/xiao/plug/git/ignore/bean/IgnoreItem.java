@@ -2,43 +2,23 @@ package com.xiao.plug.git.ignore.bean;
 
 public class IgnoreItem
 {
-    private String name;
+    private String content;
 
-    private String description;
-
-    public IgnoreItem(String name, String description)
+    public IgnoreItem(String content)
     {
-        this.name = name;
-
-        this.description = description;
-    }
-
-    public IgnoreItem(String name)
-    {
-        this.name = name;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public String getDescription()
-    {
-        return description;
+        this.content = content;
     }
 
     public String getContent()
     {
-        return (description == null ? "" : "# " + description + "\n") + name;
+        return content;
     }
 
     @Override
     public String toString()
     {
         return "IgnoreItem{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                "content='" + content + '\'' +
                 '}';
     }
 }
