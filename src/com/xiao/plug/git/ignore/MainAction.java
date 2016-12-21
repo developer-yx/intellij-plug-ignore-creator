@@ -29,9 +29,34 @@ public class MainAction extends AnAction
 
         FileCreator creator = application.getComponent(FileCreator.class);
 
-        if (creator.createIgnoreFile(files))
+        final StringBuilder builder = new StringBuilder();
+
+        builder.append("Ignore file created successfully. ignored the items below:");
+
+        boolean success = false;
+
+        for (IgnoreFile file : files)
         {
-            showSuccessMessage(files);
+            if (creator.createIgnoreFile(file))
+            {
+                success = true;
+
+                builder.append("\n" + file.getPath() + " [SUCCESS]");
+
+                for (IgnoreItem item : file.getIgnoreItems())
+                {
+                    builder.append("\n" + item.getContent());
+                }
+            }
+            else
+            {
+                builder.append("\n" + file.getPath() + " [FAILED]");
+            }
+        }
+
+        if (success)
+        {
+            Messages.showMessageDialog(builder.toString(), "Created Successfully", Messages.getInformationIcon());
         }
         else
         {

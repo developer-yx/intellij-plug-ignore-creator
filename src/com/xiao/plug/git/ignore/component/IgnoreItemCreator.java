@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -71,62 +72,76 @@ public class IgnoreItemCreator implements ApplicationComponent
 
     private List<IgnoreFile> getModuleIgnoreFiles(String rootPath)
     {
+        File[] list = new File(rootPath).listFiles(mModuleFilter);
+
+        if (list == null || list.length <= 0)
+        {
+            return null;
+        }
+
         List<IgnoreFile> ignoreFiles = new ArrayList<>();
 
-        File[] list = new File(rootPath).listFiles(new FilenameFilter()
+        for (File module : list)
         {
-            @Override
-            public boolean accept(File dir, String name)
-            {
-                return "settings.gradle".equals(name);
-            }
-        });
-
-        if (list == null || list.length != 1)
-        {
-            return null;
+            ignoreFiles.add(new IgnoreFile(module.getPath(), getModuleIgnoreItems()));
         }
 
-        BufferedReader bufferedReader = null;
+        return ignoreFiles;
 
-        try
-        {
-            bufferedReader = new BufferedReader(new FileReader(list[0]));
-
-            String line;
-
-            while ((line = bufferedReader.readLine()) != null)
-            {
-                if (!line.contains("include"))
-                {
-                    continue;
-                }
-
-                List<String> modules = getModules(line);
-
-                for (String module : modules)
-                {
-                    ignoreFiles.add(new IgnoreFile(rootPath + "/" + module, getModuleIgnoreItems()));
-                }
-            }
-
-            return ignoreFiles;
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
-        finally
-        {
-            try
-            {
-                bufferedReader.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
+        //        File[] list = new File(rootPath).listFiles(new FilenameFilter()
+        //        {
+        //            @Override
+        //            public boolean accept(File dir, String name)
+        //            {
+        //                return "settings.gradle".equals(name);
+        //            }
+        //        });
+        //
+        //        if (list == null || list.length != 1)
+        //        {
+        //            return null;
+        //        }
+        //
+        //        BufferedReader bufferedReader = null;
+        //
+        //        try
+        //        {
+        //            bufferedReader = new BufferedReader(new FileReader(list[0]));
+        //
+        //            String line;
+        //
+        //            while ((line = bufferedReader.readLine()) != null)
+        //            {
+        //                if (!line.contains("include"))
+        //                {
+        //                    continue;
+        //                }
+        //
+        //                List<String> modules = getModules(line);
+        //
+        //                for (String module : modules)
+        //                {
+        //                    ignoreFiles.add(new IgnoreFile(rootPath + "/" + module, getModuleIgnoreItems()));
+        //                }
+        //            }
+        //
+        //            return ignoreFiles;
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            return null;
+        //        }
+        //        finally
+        //        {
+        //            try
+        //            {
+        //                bufferedReader.close();
+        //            }
+        //            catch (IOException e)
+        //            {
+        //                e.printStackTrace();
+        //            }
+        //        }
     }
 
     private static List<IgnoreItem> getModuleIgnoreItems()
@@ -142,44 +157,64 @@ public class IgnoreItemCreator implements ApplicationComponent
         return items;
     }
 
-    private static List<String> getModules(String includeLine)
+    //    private static List<String> getModules(String includeLine)
+    //    {
+    //        if (includeLine == null || !includeLine.startsWith("include"))
+    //        {
+    //            return null;
+    //        }
+    //
+    //        includeLine = includeLine.replaceAll("include", " ");
+    //
+    //        includeLine = includeLine.replaceAll("\'", " ");
+    //
+    //        includeLine = includeLine.replaceAll(":", " ");
+    //
+    //        includeLine = includeLine.replaceAll(",", " ");
+    //
+    //        String[] items = includeLine.split(" ");
+    //
+    //        List<String> moduleNames = new ArrayList<>();
+    //
+    //        for (String item : items)
+    //        {
+    //            if (item != null && !item.trim().isEmpty())
+    //            {
+    //                moduleNames.add(item);
+    //            }
+    //        }
+    //
+    //        return moduleNames;
+    //    }
+
+    private final FileFilter mModuleFilter = new FileFilter()
     {
-        if (includeLine == null || !includeLine.startsWith("include"))
+        @Override
+        public boolean accept(File file)
         {
-            return null;
-        }
-
-        List<String> strings = new ArrayList<>();
-
-        char[] chars = includeLine.toCharArray();
-
-        int index = -1;
-
-        for (int i = 0; i < chars.length; i++)
-        {
-            if ('\'' == chars[i])
+            if (!file.isDirectory())
             {
-                if (index == -1)
-                {
-                    index = i + 1;
-                }
-                else
-                {
-                    try
-                    {
-                        strings.add(includeLine.substring(index, i)
-                                .replace(":", ""));
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
-
-                    index = -1;
-                }
+                return false;
             }
-        }
 
-        return strings;
-    }
+            String name = file.getName();
+
+            if (name.startsWith("."))
+            {
+                return false;
+            }
+
+            if ("build".equals(name))
+            {
+                return false;
+            }
+
+            if ("gradle".equals(name))
+            {
+                return false;
+            }
+
+            return true;
+        }
+    };
 }

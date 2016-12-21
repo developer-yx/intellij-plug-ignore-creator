@@ -37,23 +37,30 @@ public class FileCreator implements ApplicationComponent
         return "FileCreator";
     }
 
-    public boolean createIgnoreFile(List<IgnoreFile> files)
-    {
-        boolean success = true;
-
-        for (IgnoreFile item : files)
-        {
-            if (!createIgnoreFile(item))
-            {
-                success = false;
-            }
-        }
-
-        return success;
-    }
+    //    public boolean createIgnoreFile(List<IgnoreFile> files)
+    //    {
+    //        boolean success = false;
+    //
+    //        for (IgnoreFile item : files)
+    //        {
+    //            if (!createIgnoreFile(item))
+    //            {
+    //                success = true;
+    //            }
+    //        }
+    //
+    //        return success;
+    //    }
 
     public boolean createIgnoreFile(IgnoreFile file)
     {
+        File path = new File(file.getPath());
+
+        if (!path.exists())
+        {
+            return false;
+        }
+
         BufferedWriter bufferedWriter = null;
 
         try
