@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d1615c98-3ef0-4be4-9097-3618f70b5616" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/bean/IgnoreFile.class" afterPath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/bean/IgnoreFile.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/component/FileCreator.class" afterPath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/component/FileCreator.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/component/IgnoreItemCreator$1.class" afterPath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/component/IgnoreItemCreator$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/component/IgnoreItemCreator.class" afterPath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/component/IgnoreItemCreator.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/META-INF/plugin.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/MainAction.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/bean/IgnoreFile.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/bean/IgnoreItem.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/component/FileCreator.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/component/IgnoreItemCreator$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/intellij-plug-ignore-creator/com/xiao/plug/git/ignore/component/IgnoreItemCreator.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="intellij-plug-ignore-creator.iws" />
@@ -710,7 +712,7 @@
       <workItem from="1488987853699" duration="1330000" />
       <workItem from="1491244695572" duration="95000" />
       <workItem from="1491245480659" duration="2666000" />
-      <workItem from="1491315023131" duration="5721000" />
+      <workItem from="1491315023131" duration="5757000" />
     </task>
     <task id="LOCAL-00001" summary="updated to support module ignore file">
       <created>1482230841743</created>
@@ -747,11 +749,18 @@
       <option name="project" value="LOCAL" />
       <updated>1491321200011</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added modules chooser dialog">
+      <created>1491321341060</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1491321341061</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9812000" />
+    <option name="totallyTimeSpent" value="9848000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
