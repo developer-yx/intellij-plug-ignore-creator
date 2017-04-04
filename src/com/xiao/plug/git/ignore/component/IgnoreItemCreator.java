@@ -1,6 +1,7 @@
 package com.xiao.plug.git.ignore.component;
 
 import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.xiao.plug.git.ignore.bean.IgnoreFile;
 import com.xiao.plug.git.ignore.bean.IgnoreItem;
 
@@ -40,7 +41,7 @@ public class IgnoreItemCreator implements ApplicationComponent
         return "FileChecker";
     }
 
-    public List<IgnoreFile> getIgnoreFiles(String rootPath)
+    public IgnoreFile getRootIgnore(VirtualFile rootPath)
     {
         List<IgnoreItem> rootIgnoreItems = new ArrayList<>();
 
@@ -56,95 +57,72 @@ public class IgnoreItemCreator implements ApplicationComponent
 
         rootIgnoreItems.add(new IgnoreItem("build/"));
 
-        List<IgnoreFile> files = new ArrayList<>();
-
-        files.add(new IgnoreFile(rootPath, rootIgnoreItems));
-
-        List<IgnoreFile> moduleIgnoreFiles = getModuleIgnoreFiles(rootPath);
-
-        if (moduleIgnoreFiles != null)
-        {
-            files.addAll(moduleIgnoreFiles);
-        }
-
-        return files;
+        return new IgnoreFile(new File(rootPath.getPath()), rootIgnoreItems);
     }
 
-    private List<IgnoreFile> getModuleIgnoreFiles(String rootPath)
+    public List<IgnoreFile> getDefaultModuleIgnore(VirtualFile rootPath)
     {
-        File[] list = new File(rootPath).listFiles(mModuleFilter);
+        List<IgnoreItem> ignoreItems = getModuleIgnoreItems();
 
-        if (list == null || list.length <= 0)
+        List<IgnoreFile> ignoreFiles = new ArrayList<>();
+
+        File[] list = new File(rootPath.getPath()).listFiles(new FilenameFilter()
+        {
+            @Override
+            public boolean accept(File dir, String name)
+            {
+                return "settings.gradle".equals(name);
+            }
+        });
+
+        if (list == null || list.length != 1)
         {
             return null;
         }
 
-        List<IgnoreFile> ignoreFiles = new ArrayList<>();
+        BufferedReader bufferedReader = null;
 
-        for (File module : list)
+        try
         {
-            ignoreFiles.add(new IgnoreFile(module.getPath(), getModuleIgnoreItems()));
+            bufferedReader = new BufferedReader(new FileReader(list[0]));
+
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                if (!line.contains("include"))
+                {
+                    continue;
+                }
+
+                List<String> modules = getModules(line);
+
+                for (String module : modules)
+                {
+                    ignoreFiles.add(new IgnoreFile(new File(rootPath.getPath() + "/" + module), ignoreItems));
+                }
+            }
+
+            return ignoreFiles;
         }
-
-        return ignoreFiles;
-
-        //        File[] list = new File(rootPath).listFiles(new FilenameFilter()
-        //        {
-        //            @Override
-        //            public boolean accept(File dir, String name)
-        //            {
-        //                return "settings.gradle".equals(name);
-        //            }
-        //        });
-        //
-        //        if (list == null || list.length != 1)
-        //        {
-        //            return null;
-        //        }
-        //
-        //        BufferedReader bufferedReader = null;
-        //
-        //        try
-        //        {
-        //            bufferedReader = new BufferedReader(new FileReader(list[0]));
-        //
-        //            String line;
-        //
-        //            while ((line = bufferedReader.readLine()) != null)
-        //            {
-        //                if (!line.contains("include"))
-        //                {
-        //                    continue;
-        //                }
-        //
-        //                List<String> modules = getModules(line);
-        //
-        //                for (String module : modules)
-        //                {
-        //                    ignoreFiles.add(new IgnoreFile(rootPath + "/" + module, getModuleIgnoreItems()));
-        //                }
-        //            }
-        //
-        //            return ignoreFiles;
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            return null;
-        //        }
-        //        finally
-        //        {
-        //            try
-        //            {
-        //                bufferedReader.close();
-        //            }
-        //            catch (IOException e)
-        //            {
-        //                e.printStackTrace();
-        //            }
-        //        }
+        catch (Exception e)
+        {
+            return null;
+        }
+        finally
+        {
+            try
+            {
+                bufferedReader.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
-    private static List<IgnoreItem> getModuleIgnoreItems()
+    public static List<IgnoreItem> getModuleIgnoreItems()
     {
         List<IgnoreItem> items = new ArrayList<>();
 
@@ -157,64 +135,33 @@ public class IgnoreItemCreator implements ApplicationComponent
         return items;
     }
 
-    //    private static List<String> getModules(String includeLine)
-    //    {
-    //        if (includeLine == null || !includeLine.startsWith("include"))
-    //        {
-    //            return null;
-    //        }
-    //
-    //        includeLine = includeLine.replaceAll("include", " ");
-    //
-    //        includeLine = includeLine.replaceAll("\'", " ");
-    //
-    //        includeLine = includeLine.replaceAll(":", " ");
-    //
-    //        includeLine = includeLine.replaceAll(",", " ");
-    //
-    //        String[] items = includeLine.split(" ");
-    //
-    //        List<String> moduleNames = new ArrayList<>();
-    //
-    //        for (String item : items)
-    //        {
-    //            if (item != null && !item.trim().isEmpty())
-    //            {
-    //                moduleNames.add(item);
-    //            }
-    //        }
-    //
-    //        return moduleNames;
-    //    }
-
-    private final FileFilter mModuleFilter = new FileFilter()
+    private static List<String> getModules(String includeLine)
     {
-        @Override
-        public boolean accept(File file)
+        if (includeLine == null || !includeLine.startsWith("include"))
         {
-            if (!file.isDirectory())
-            {
-                return false;
-            }
-
-            String name = file.getName();
-
-            if (name.startsWith("."))
-            {
-                return false;
-            }
-
-            if ("build".equals(name))
-            {
-                return false;
-            }
-
-            if ("gradle".equals(name))
-            {
-                return false;
-            }
-
-            return true;
+            return null;
         }
-    };
+
+        includeLine = includeLine.replaceAll("include", " ");
+
+        includeLine = includeLine.replaceAll("\'", " ");
+
+        includeLine = includeLine.replaceAll(":", " ");
+
+        includeLine = includeLine.replaceAll(",", " ");
+
+        String[] items = includeLine.split(" ");
+
+        List<String> moduleNames = new ArrayList<>();
+
+        for (String item : items)
+        {
+            if (item != null && !item.trim().isEmpty())
+            {
+                moduleNames.add(item);
+            }
+        }
+
+        return moduleNames;
+    }
 }

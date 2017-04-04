@@ -1,23 +1,20 @@
 <idea-plugin version="2">
     <id>com.xiao.plug.git.ignore</id>
     <name>Android Ignore File Creator</name>
-    <version>1.0</version>
-    <vendor email="developer.yx@gamil.com"
-            url="https://github.com/developer-yx/intellij-plug-ignore-creator.git">Developer.YX
+    <version>2.0</version>
+    <vendor url="https://github.com/developer-yx/intellij-plug-ignore-creator.git">
     </vendor>
 
     <description><![CDATA[
       This plugin is an ignore file creator for Android Studio.<br>
-      it can add the item which should be ignore for automatically, now support the items below:<br>
-      .gradle/<br>
-      .idea/<br>
-      local.properties<br>
-      *.iml<br>
-      captures/<br>
-      build/<br>
-      module1/.gitignore<br>
-      module2/.gitignore<br>
-      ......<br>
+      <br>
+      1. CREATE STANDARD:<br>
+      Create ignore file for standard Android Project. (Default Option)<br>
+      <br>
+      2. SELECT MODULE:<br>
+      You can select modules which you want to create the ignore file in.<br>
+      Multiple choice is supported. you can select all modules in the dialog.<br>
+      <br>
     ]]></description>
 
     <change-notes><![CDATA[

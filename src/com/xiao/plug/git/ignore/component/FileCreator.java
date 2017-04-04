@@ -54,9 +54,7 @@ public class FileCreator implements ApplicationComponent
 
     public boolean createIgnoreFile(IgnoreFile file)
     {
-        File path = new File(file.getPath());
-
-        if (!path.exists())
+        if (!file.getPath().exists())
         {
             return false;
         }

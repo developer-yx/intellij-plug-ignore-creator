@@ -4,88 +4,98 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.fileChooser.FileChooser;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.ui.Messages;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.xiao.plug.git.ignore.bean.IgnoreFile;
-import com.xiao.plug.git.ignore.bean.IgnoreItem;
 import com.xiao.plug.git.ignore.component.IgnoreItemCreator;
 import com.xiao.plug.git.ignore.component.FileCreator;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainAction extends AnAction
 {
+    private static final String S_TEXT_STANDARD = "CREATE STANDARD";
+
+    private static final String S_TEXT_SELECT_MODULE = "SELECT MODULE";
 
     @Override
     public void actionPerformed(AnActionEvent event)
     {
-        final String projectPath = event.getProject().getBasePath();
+        final Application application = ApplicationManager.getApplication();
 
-        Application application = ApplicationManager.getApplication();
+        final VirtualFile projectPath = event.getProject().getBaseDir();
+
+        int option = Messages.showYesNoDialog(event.getProject(), "Do you want create Ignore file for standard Android project?" +
+                "\n\nOr select Module by yourself?", "Alert", S_TEXT_STANDARD, S_TEXT_SELECT_MODULE, Messages.getQuestionIcon());
 
         IgnoreItemCreator checker = application.getComponent(IgnoreItemCreator.class);
 
-        List<IgnoreFile> files = checker.getIgnoreFiles(projectPath);
+        final IgnoreFile rootIgnoreFile = checker.getRootIgnore(projectPath);
 
-        FileCreator creator = application.getComponent(FileCreator.class);
+        List<IgnoreFile> moduleIgnoreFiles;
 
-        final StringBuilder builder = new StringBuilder();
-
-        builder.append("Ignore file created successfully. ignored the items below:");
-
-        boolean success = false;
-
-        for (IgnoreFile file : files)
+        if (option == 0)
         {
-            if (creator.createIgnoreFile(file))
-            {
-                success = true;
-
-                builder.append("\n" + file.getPath() + " [SUCCESS]");
-
-                for (IgnoreItem item : file.getIgnoreItems())
-                {
-                    builder.append("\n" + item.getContent());
-                }
-            }
-            else
-            {
-                builder.append("\n" + file.getPath() + " [FAILED]");
-            }
-        }
-
-        if (success)
-        {
-            Messages.showMessageDialog(builder.toString(), "Created Successfully", Messages.getInformationIcon());
+            moduleIgnoreFiles = checker.getDefaultModuleIgnore(projectPath);
         }
         else
         {
-            showErrorMessage("Failed to create the ignore file !!!");
-        }
+            VirtualFile[] modules = showModuleChooserDialog(event);
 
-    }
+            moduleIgnoreFiles = new ArrayList<>();
 
-    private void showSuccessMessage(List<IgnoreFile> files)
-    {
-        final StringBuilder builder = new StringBuilder();
-
-        builder.append("Ignore file created successfully. ignored the items below:");
-
-        for (IgnoreFile file : files)
-        {
-            builder.append("\n" + file.getPath());
-
-            for (IgnoreItem item : file.getIgnoreItems())
+            for (VirtualFile module : modules)
             {
-                builder.append("\n" + item.getContent());
+                moduleIgnoreFiles.add(new IgnoreFile(new File(module.getPath()), IgnoreItemCreator.getModuleIgnoreItems()));
             }
         }
 
-        Messages.showMessageDialog(builder.toString(), "Created Successfully", Messages.getInformationIcon());
+        FileCreator creator = application.getComponent(FileCreator.class);
+
+        creator.createIgnoreFile(rootIgnoreFile);
+
+        for (IgnoreFile file : moduleIgnoreFiles)
+        {
+            creator.createIgnoreFile(file);
+        }
+
+        showSuccessMessage(rootIgnoreFile, moduleIgnoreFiles);
     }
 
-    private void showErrorMessage(String msg)
+    private VirtualFile[] showModuleChooserDialog(AnActionEvent event)
     {
-        Messages.showMessageDialog("Error", msg, Messages.getInformationIcon());
+        FileChooserDescriptor descriptor = new FileChooserDescriptor(false, true, false, false, false, true);
+
+        return FileChooser.chooseFiles(descriptor, event.getProject(), event.getProject().getBaseDir());
     }
+
+    private void showSuccessMessage(IgnoreFile rootIgnore, List<IgnoreFile> moduleIgnores)
+    {
+        final StringBuilder builder = new StringBuilder();
+
+        //        builder.append("\n");
+
+        if (rootIgnore != null)
+        {
+            builder.append("-> ./.gitignore\n\n");
+        }
+
+        for (IgnoreFile file : moduleIgnores)
+        {
+            builder.append("-> ./" + file.getPath().getName() + "/.gitignore\n\n");
+        }
+
+        Messages.showMessageDialog(builder.toString(), "Created: ", Messages.getInformationIcon());
+    }
+
+    //
+    //    private void showErrorMessage(String msg)
+    //    {
+    //        Messages.showMessageDialog("Error", msg, Messages.getInformationIcon());
+    //    }
 }
