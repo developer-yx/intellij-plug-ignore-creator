@@ -19,9 +19,9 @@ import java.util.List;
 
 public class MainAction extends AnAction
 {
-    private static final String S_TEXT_STANDARD = "CREATE STANDARD";
+    private static final String S_TEXT_STANDARD = "Create Default";
 
-    private static final String S_TEXT_SELECT_MODULE = "SELECT MODULE";
+    private static final String S_TEXT_SELECT_MODULE = "Select Module";
 
     @Override
     public void actionPerformed(AnActionEvent event)
@@ -30,8 +30,8 @@ public class MainAction extends AnAction
 
         final VirtualFile projectPath = event.getProject().getBaseDir();
 
-        int option = Messages.showYesNoDialog(event.getProject(), "Do you want create Ignore file for standard Android project?" +
-                "\n\nOr select Module by yourself?", "Alert", S_TEXT_STANDARD, S_TEXT_SELECT_MODULE, Messages.getQuestionIcon());
+        int option = Messages.showYesNoDialog(event.getProject(), "Do you want create default Ignore file for standard Android project?" +
+                "\n\nOr select module by yourself?", "Alert", S_TEXT_STANDARD, S_TEXT_SELECT_MODULE, Messages.getQuestionIcon());
 
         IgnoreItemCreator checker = application.getComponent(IgnoreItemCreator.class);
 
