@@ -30,7 +30,7 @@ public class MainAction extends AnAction
 
         final VirtualFile projectPath = event.getProject().getBaseDir();
 
-        int option = Messages.showYesNoDialog(event.getProject(), "Do you want create default Ignore file for standard Android project?" +
+        int option = Messages.showYesNoDialog(event.getProject(), "Do you want to create default Ignore file for standard Android project?" +
                 "\n\nOr select module by yourself?", "Alert", S_TEXT_STANDARD, S_TEXT_SELECT_MODULE, Messages.getQuestionIcon());
 
         IgnoreItemCreator checker = application.getComponent(IgnoreItemCreator.class);
